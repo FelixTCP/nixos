@@ -47,23 +47,34 @@
     rev = "99469c4a9b1ccf77fade25842dc7bafbc8ce9946";  # Latest commit as of my knowledge cutoff
     sha256 = "sha256-hW8mfwB8F9ZkTQ72WQp/1fy8KL1IIYMZBtZYIwZdMQc=";
   };
+  
+  # TODO: 
+  # home.file.".vpn/openfortivpn/oth".text = ''
+  #   host = sslvpn.oth-regensburg.de
+  #   realm = vpn-default
+  #   port = 443
+  #   trusted-cert = 2d93980ff2351c71f8721f554df368bdd38bfcfe3b28f67e19b898623f09d7f2
+  #   username = wef41751
+  #   password =
+  # '';
 
   home.file = {
-    #".tmux/plugins/tpm".source = pkgs.fetchFromGitHub {
-    #  owner = "tmux-plugins";
-    #  repo = "tpm";
-    #  rev = "v3.0.0";
-    #  sha256 = "18q5j92fzmxwg8g9mzgdi5klfzcz0z01nz7yc3jjgs1xn69s7x0w";
-    #};
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy. ".screenrc".source = dotfiles/screenrc;
+    # Building this configuration will create a copy of 'dotfiles/screenrc' in
+    # the Nix store. Activating the configuration will then make '~/.screenrc' a
+    # symlink to the Nix store copy. ".screenrc".source = dotfiles/screenrc;
 
-    # # You can also set the file content immediately.
+    # You can also set the file content immediately.
     # ".gradle/gradle.properties".text = ''
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
+    "~/Uni/.gitconfig" = {
+    text = ''
+      [user]
+        name = "Felix Wensky"
+        email = "felix.wensky@st.oth-regensburg.de"
+    '';
+  };
   };
 
   # Home Manager can also manage your environment variables through
@@ -130,9 +141,10 @@
       syntaxHighlighting.enable = true;
       shellAliases = {
         nv = "nvim";
-        nix-rebuild = "${pkgs.zsh}/bin/zsh -c 'sudo nixos-rebuild switch --flake ~/.config/nixos/#defaultNixos";
-        nix-on-rebuild = "echo \"Rebuild complete\" && ~/.config/nixos/update_and_push.sh && echo \"Script executed\"";
+        nix-rebuild = "${pkgs.zsh}/bin/zsh -c 'sudo nixos-rebuild switch --flake ~/.config/nixos/#defaultNixos'";
+        nix-on-rebuild = "~/.config/nixos/push_on_update.sh";
         nix-update = "nix-rebuild && nix-on-rebuild";
+        # oth-connect = "sudo openfortivpn -c ~/.vpn/openfortivpn/oth";
       };
       initExtra = ''
         # Enable correction

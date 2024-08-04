@@ -173,6 +173,7 @@
     fastfetch
     spotify
     spotify-player
+    bitwarden-cli
     vesktop
     wget
   ];
