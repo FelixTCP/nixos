@@ -1,6 +1,10 @@
 #!/home/felix/.nix-profile/bin/zsh
-echo "Script started"
-# Function to generate a random 8-character string
+
+LIGHT_GREEN='\033[1;32m'
+NC='\033[0m' # No Color
+echo -e "\n${LIGHT_GREEN}Starting Git Sync${NC}\n"
+
+# Function to generate a random 8-character string to tell commits apart
 generate_random_commit_hash() {
     local chars="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
     local str=""
@@ -29,4 +33,4 @@ git commit -m "Update nixos configuration ($commit_message)"
 # Push the changes to the remote repository
 git push origin main
 
-echo "Script ended"
+echo -e "\n${LIGHT_GREEN}Successfully Updated all Nix Files${NC}"
