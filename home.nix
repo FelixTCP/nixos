@@ -47,7 +47,15 @@
     rev = "99469c4a9b1ccf77fade25842dc7bafbc8ce9946";  # Latest commit as of my knowledge cutoff
     sha256 = "sha256-hW8mfwB8F9ZkTQ72WQp/1fy8KL1IIYMZBtZYIwZdMQc=";
   };
-  
+
+  home.file."Uni/.gitconfig" = {
+  text = ''
+    [user]
+      name = "Felix Wensky"
+      email = "felix.wensky@st.oth-regensburg.de"
+  '';
+  };
+
   # TODO: 
   # home.file.".vpn/openfortivpn/oth".text = ''
   #   host = sslvpn.oth-regensburg.de
@@ -68,13 +76,6 @@
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
-    "~/Uni/.gitconfig" = {
-    text = ''
-      [user]
-        name = "Felix Wensky"
-        email = "felix.wensky@st.oth-regensburg.de"
-    '';
-  };
   };
 
   # Home Manager can also manage your environment variables through

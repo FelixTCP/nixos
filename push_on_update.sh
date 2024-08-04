@@ -1,4 +1,4 @@
-#!/home/felix/.nix-profile/bin/zsh
+#!/run/current-system/sw/bin/zsh
 
 LIGHT_GREEN='\033[1;32m'
 NC='\033[0m' # No Color
