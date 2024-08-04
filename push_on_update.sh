@@ -1,5 +1,5 @@
-#!/bin/bash
-
+#!/home/felix/.nix-profile/bin/zsh
+echo "Script started"
 # Function to generate a random 8-character string
 generate_random_commit_hash() {
     local chars="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
@@ -28,3 +28,5 @@ git commit -m "Update nixos configuration ($commit_message)"
 
 # Push the changes to the remote repository
 git push origin main
+
+echo "Script ended"

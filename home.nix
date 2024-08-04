@@ -130,7 +130,9 @@
       syntaxHighlighting.enable = true;
       shellAliases = {
         nv = "nvim";
-        nix-update = "${pkgs.zsh}/bin/zsh -c 'sudo nixos-rebuild switch --flake ~/.config/nixos/#defaultNixos && ~/.config/nixos/update_and_push.sh'";
+        nix-rebuild = "${pkgs.zsh}/bin/zsh -c 'sudo nixos-rebuild switch --flake ~/.config/nixos/#defaultNixos";
+        nix-on-rebuild = "echo \"Rebuild complete\" && ~/.config/nixos/update_and_push.sh && echo \"Script executed\"";
+        nix-update = "nix-rebuild && nix-on-rebuild";
       };
       initExtra = ''
         # Enable correction
