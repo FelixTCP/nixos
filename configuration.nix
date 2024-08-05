@@ -171,11 +171,14 @@
     zip
     unzip
     fastfetch
+    wget
+
+    #applications
     spotify
     spotify-player
+    thunderbird
     bitwarden-cli
     vesktop
-    wget
   ];
 
   
