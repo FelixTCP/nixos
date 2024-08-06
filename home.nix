@@ -40,8 +40,11 @@
   # plain files is through 'home.file'.
 
   
+
+    home.file = {
+
 # Install TPM
-  home.file.".tmux/plugins/tpm".source = pkgs.fetchFromGitHub {
+  ".tmux/plugins/tpm".source = pkgs.fetchFromGitHub {
     owner = "tmux-plugins";
     repo = "tpm";
     rev = "99469c4a9b1ccf77fade25842dc7bafbc8ce9946";  # Latest commit as of my knowledge cutoff
@@ -58,7 +61,7 @@
   #   password =
   # '';
 
-  home.file."Uni/.gitconfig" = {
+  "Uni/.gitconfig" = {
       text = ''
         [user]
           name = "Felix Wensky"
@@ -68,7 +71,7 @@
 
 
     #Vesktop
-    home.file.".config/vesktop/settings.json" = {
+    ".config/vesktop/settings.json" = {
       text = ''
         {
     "minimizeToTray": false,
@@ -85,7 +88,7 @@
         }
       '';
         };
-    home.file.".config/vesktop/state.json" = {
+    ".config/vesktop/state.json" = {
       text = ''
 {
     "firstLaunch": false,
@@ -94,7 +97,7 @@
       };
 
 
-    home.file.".config/vesktop/settings/settings.json" = {
+    ".config/vesktop/settings/settings.json" = {
         text = ''
             {
     "autoUpdate": true,
@@ -735,6 +738,7 @@
 }
         '';
       };
+    };
 
 
 
