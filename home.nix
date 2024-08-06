@@ -71,7 +71,7 @@
 
 
     #Vesktop
-    ".config/vesktop/settings.json" = {
+    ".config/vesktop/ settings.json" = {
       text = ''
         {
     "minimizeToTray": false,
