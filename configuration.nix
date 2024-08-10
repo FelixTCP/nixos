@@ -171,7 +171,10 @@
     zip
     unzip
     fastfetch
+    speedtest-go
+    tlrc
     wget
+    xclip
 
     #applications
     spotify

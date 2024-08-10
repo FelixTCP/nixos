@@ -71,32 +71,6 @@
 
 
     #Vesktop
-    ".config/vesktop/ settings.json" = {
-      text = ''
-        {
-    "minimizeToTray": false,
-    "discordBranch": "stable",
-    "arRPC": "on",
-    "splashColor": "rgb(220, 221, 222)",
-    "splashBackground": "rgb(16, 16, 20)",
-    "customTitleBar": true,
-    "staticTitle": true,
-    "enableMenu": false,
-    "splashTheming": false,
-    "tray": false,
-    "appBadge": false
-        }
-      '';
-        };
-    ".config/vesktop/state.json" = {
-      text = ''
-{
-    "firstLaunch": false,
-}
-        '';
-      };
-
-
     ".config/vesktop/settings/settings.json" = {
         text = ''
             {
@@ -864,6 +838,7 @@
         nix-rebuild = "${pkgs.zsh}/bin/zsh -c 'sudo nixos-rebuild switch --flake ~/.config/nixos/#defaultNixos'";
         nix-on-rebuild = "~/.config/nixos/push_on_update.sh";
         nix-update = "nix-rebuild && nix-on-rebuild";
+        ls = "eza --color=always --oneline --group-directories-first --long --git --no-filesize --icons=always --no-time --no-user --no-permissions";
         # oth-connect = "sudo openfortivpn -c ~/.vpn/openfortivpn/oth";
       };
       initExtra = ''
@@ -887,7 +862,7 @@
         # Set the prompt
         export PROMPT='%F{blue}%n%f | %F{white}%~%f> '
         export TERM="xterm-256color"
-
+        export PATH=$PATH:~/.cargo/bin/
         # zoxide remap
         eval "$(zoxide init --cmd cd zsh)"
       '';   
@@ -1001,22 +976,23 @@
       yank
     ];
   };
-
-
-    neovim = {
-      enable = true;
-
-      viAlias = true;
-      vimAlias = true;
-      vimdiffAlias = true;
-    };
-
     btop = {
       enable = true;
       settings = {
         color_theme = "gruvbox_dark_v2";
         vim_keys = true;
       };
+    };
+
+    atuin = {
+        enable = true;
+        enableZshIntegration = true;
+    };
+
+
+    eza = {
+        enable = true;
+        enableZshIntegration = true;
     };
 
     firefox = {
