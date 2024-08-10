@@ -838,7 +838,10 @@
         nix-rebuild = "${pkgs.zsh}/bin/zsh -c 'sudo nixos-rebuild switch --flake ~/.config/nixos/#defaultNixos'";
         nix-on-rebuild = "~/.config/nixos/push_on_update.sh";
         nix-update = "nix-rebuild && nix-on-rebuild";
-        ls = "eza --color=always --oneline --group-directories-first --long --git --no-filesize --icons=always --no-time --no-user --no-permissions";
+        ls = "eza --color=always --group-directories-first --long --git --no-filesize --icons=always --no-time --no-user --no-permissions";
+        ll = "eza --color=always --oneline --group-directories-first --long --git --no-filesize --icons=always --no-time --no-user --no-permissions";
+        lt = "eza --color=always --tree --level=3 --group-directories-first --long --git --no-filesize --icons=always --no-time --no-user --no-permissions";
+        git-loc = "git ls-files | xargs wc -l";
         # oth-connect = "sudo openfortivpn -c ~/.vpn/openfortivpn/oth";
       };
       initExtra = ''
