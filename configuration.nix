@@ -145,7 +145,6 @@
     fd
     btop
     bat
-    zoxide
 
     #development
       # langs
@@ -179,7 +178,6 @@
 
     #applications
     spotify
-    spotify-player
     thunderbird
     bitwarden-cli
     vesktop

@@ -998,6 +998,11 @@
         enableZshIntegration = true;
     };
 
+    zoxide = {
+        enable = true;
+        enableZshIntegration = true;
+    };
+
     firefox = {
       enable = true;
       profiles.felix = {
