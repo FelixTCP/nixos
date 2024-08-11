@@ -8,27 +8,28 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
   };
 
-  outputs = { nixpkgs, home-manager, ... }@inputs: 
-  let 
-    system = "x86_64-linux";
-    pkgs = nixpkgs.legacyPackages.${system};
-    in
-    {
+  outputs = { nixpkgs, home-manager, nixvim, ... }@inputs:
+    let
+      system = "x86_64-linux";
+      pkgs = pkgs.legacyPackages.${system};
+    in {
       nixosConfigurations = {
         defaultNixos = nixpkgs.lib.nixosSystem {
-          specialArgs = {inherit inputs system;};
-
-          modules = [
-            ./configuration.nix 
-          ];
+          inherit system;
+          specialArgs = { inherit inputs; };
+          modules = [ ./configuration.nix ];
         };
       };
-      # devShells.${system}.default = (import ./shell.nix {inherit pkgs; });
-  };
+    };
 }

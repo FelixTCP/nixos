@@ -5,11 +5,10 @@
 { inputs, config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      inputs.home-manager.nixosModules.home-manager
-    ];
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    inputs.home-manager.nixosModules.home-manager
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -90,9 +89,6 @@
     description = "Felix";
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.zsh;
-    packages = with pkgs; [
-    #  thunderbird
-    ];
   };
 
   # Enable automatic login for the user.
@@ -119,10 +115,10 @@
   home-manager.backupFileExtension = "backup";
 
   home-manager = {
-    extraSpecialArgs = {inherit inputs;};
-    users = {
-      felix = import ./home.nix;
-    };
+    extraSpecialArgs = { inherit inputs; };
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    users.felix = import ./home.nix;
   };
 
   # List packages installed in system profile. To search, run:
@@ -130,7 +126,7 @@
   environment.systemPackages = with pkgs; [
     #nix
     home-manager
-    
+
     #gnome
     gnome-tweaks
 
@@ -138,7 +134,6 @@
     alacritty
     tmux
     zsh
-    neovim
     fzf
     ripgrep
     tree-sitter
@@ -147,21 +142,30 @@
     bat
 
     #development
-      # langs
-      python3
+    # langs
+    python3
 
-      # packagemanagers
-      cargo
-      luarocks
+    #linters
+    statix
 
-      # buildtools
-      gcc
-      gnumake
-      clang
-      nodejs
+    #formatters
+    nixfmt
+    stylua
+    black
+    yamllint
 
-      # utils
-      git
+    # packagemanagers
+    cargo
+    luarocks
+
+    # buildtools
+    gcc
+    gnumake
+    clang
+    nodejs
+
+    # utils
+    git
 
     #uni
     obsidian
@@ -173,17 +177,16 @@
     fastfetch
     speedtest-go
     tlrc
+    openvpn
     wget
     xclip
 
     #applications
     spotify
     thunderbird
-    bitwarden-cli
+    whatsapp-for-linux
     vesktop
   ];
-
-  
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
