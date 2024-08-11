@@ -834,6 +834,7 @@
       enableCompletion = true;
       syntaxHighlighting.enable = true;
       shellAliases = {
+        cl = "clear";
         nv = "nvim";
         nix-rebuild = "${pkgs.zsh}/bin/zsh -c 'sudo nixos-rebuild switch --flake ~/.config/nixos/#defaultNixos'";
         nix-on-rebuild = "~/.config/nixos/push_on_update.sh";
