@@ -800,6 +800,66 @@
         key = "<F5>";
         mode = [ "i" "n" "v" ];
       }
+      {
+        action = "<cmd>:Telescope git_status<CR>";
+        key = "<leader>gd";
+        mode = [ "n" ];
+        options = { desc = "Search [D]iffs"; };
+      }
+      {
+        action = "<cmd>:Telescope git_branches<CR>";
+        key = "<leader>gb";
+        mode = [ "n" ];
+        options = { desc = "Search [B]ranches"; };
+      }
+      {
+        action = "<cmd>:Telescope git_commits<CR>";
+        key = "<leader>gc";
+        mode = [ "n" ];
+        options = { desc = "Search [C]ommits"; };
+      }
+      {
+        action = "<cmd>:Gitsigns toggle_deleted<CR>";
+        key = "<leader>gtd";
+        mode = [ "n" ];
+        options = { desc = "Toggle [D]eleted"; };
+      }
+      {
+        action = "<cmd>:Gitsigns preview_hunk<CR>";
+        key = "<leader>gp";
+        mode = [ "n" ];
+        options = { desc = "[P]review Changes"; };
+      }
+      {
+        action = "<cmd>:Gitsigns reset_hunk<CR>";
+        key = "<leader>gr";
+        mode = [ "n" ];
+        options = { desc = "[R]eset Changes"; };
+      }
+      {
+        action = "<cmd>:Gitsigns stage_hunk<CR>";
+        key = "<leader>gs";
+        mode = [ "n" ];
+        options = { desc = "[S]stage Changes"; };
+      }
+      {
+        action = "<cmd>:Gitsigns undo_stage_hunk<CR>";
+        key = "<leader>gu";
+        mode = [ "n" ];
+        options = { desc = "[U]stage Changes"; };
+      }
+      {
+        action = "<cmd>:Gitsigns prev_hunk<CR>";
+        key = "[c";
+        mode = [ "n" ];
+        options = { desc = "Previous Changes"; };
+      }
+      {
+        action = "<cmd>:Gitsigns next_hunk<CR>";
+        key = "]c";
+        mode = [ "n" ];
+        options = { desc = "Next Changes"; };
+      }
     ];
 
     # Plugins
@@ -808,6 +868,7 @@
       oil.enable = true;
       treesitter.enable = true;
       luasnip.enable = true;
+      fugitive.enable = true;
       todo-comments.enable = true;
 
       which-key = {
@@ -834,6 +895,10 @@
             {
               __unkeyed-1 = "<leader>c";
               group = "Code";
+            }
+            {
+              __unkeyed-1 = "<leader>g";
+              group = "Git";
             }
           ];
         };
@@ -893,11 +958,11 @@
               action = "open_float";
               desc = "Line Diagnostics";
             };
-            "[d" = {
+            "]d" = {
               action = "goto_next";
               desc = "Next Diagnostic";
             };
-            "]d" = {
+            "[d" = {
               action = "goto_prev";
               desc = "Previous Diagnostic";
             };
@@ -952,14 +1017,6 @@
             "<C-e>" = "cmp.mapping.abort()";
             "<Enter>" = "cmp.mapping.confirm({ select = true })";
             "<Tab>" = "cmp.mapping.confirm({ select = true })";
-            # "<C-n>" = {
-            #   action = "cmp.mapping.select_next_item()";
-            #   modes = [ "i" "s" ];
-            # };
-            # "<C-p>" = {
-            #   action = "cmp.mapping.select_prev_item()";
-            #   modes = [ "i" "s" ];
-            # };
           };
         };
       };
@@ -1072,15 +1129,6 @@
           }
         ];
       };
-
-      # Add any custom Lua or VimScript here
-      # extraConfigLua = ''
-      #   -- Your custom Lua configuration
-      # '';
-      #
-      # extraConfigVim = ''
-      #   " Your custom Vim configuration
-      # '';
     };
   };
 
