@@ -147,6 +147,7 @@
 
     #linters
     statix
+    yamllint
 
     #formatters
     nixfmt
@@ -186,6 +187,7 @@
     thunderbird
     whatsapp-for-linux
     vesktop
+    discord
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

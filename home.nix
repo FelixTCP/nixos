@@ -870,6 +870,7 @@
       luasnip.enable = true;
       fugitive.enable = true;
       todo-comments.enable = true;
+      headlines.enable = true;
 
       which-key = {
         enable = true;
@@ -1128,6 +1129,16 @@
             key = "<C-w>\\";
           }
         ];
+      };
+
+      # presence-nvim = { enable = true; };
+      neocord = {
+        enable = true;
+        settings = {
+
+          # text options 
+          file_explorer_text = "Browsing Files";
+        };
       };
     };
   };
