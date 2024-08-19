@@ -752,7 +752,26 @@
   programs.nixvim = {
     enable = true;
 
-    colorschemes.catppuccin.enable = true;
+    colorschemes.catppuccin = {
+      enable = true;
+      settings = {
+        flavour = "mocha";
+        integrations = {
+          cmp = true;
+          gitsigns = true;
+          nvimtree = true;
+          treesitter = true;
+          notify = false;
+          mini = {
+            enabled = true;
+            indentscope_color = "";
+          };
+        };
+        term_colors = true;
+        transparent_background = true;
+      };
+
+    };
 
     globals.mapleader = " ";
     globals.have_nerd_font = true;
@@ -860,6 +879,18 @@
         mode = [ "n" ];
         options = { desc = "Next Changes"; };
       }
+      {
+        action = "<cmd>Trouble diagnostics toggle<CR>";
+        key = "cD";
+        mode = [ "n" ];
+        options = { desc = "Toggle all [D]iagnostics"; };
+      }
+      {
+        action = "<cmd>Trouble qflist toggle<CR>";
+        key = "cq";
+        mode = [ "n" ];
+        options = { desc = "Toggle [Q]uickfix List"; };
+      }
     ];
 
     # Plugins
@@ -871,6 +902,7 @@
       fugitive.enable = true;
       todo-comments.enable = true;
       headlines.enable = true;
+      trouble.enable = true;
 
       which-key = {
         enable = true;
@@ -913,6 +945,11 @@
           # nix
           nil-ls.enable = true;
           pyright.enable = true;
+          rust-analyzer = {
+            enable = true;
+            installCargo = false;
+            installRustc = true;
+          };
         };
         keymaps = {
           silent = true;
@@ -998,6 +1035,7 @@
           nix = [ "nixfmt" ];
           markdown = [[ "prettierd" "prettier" ]];
           yaml = [ "yamllint" ];
+          rust = [ "rustfmt" ];
         };
       };
 
@@ -1021,6 +1059,69 @@
           };
         };
       };
+
+      # dap = {
+      #   enable = true;
+      #
+      #   extensions = {
+      #     dap-ui.enable = true;
+      #     dap-virtual-text.enable = true;
+      #   };
+      #
+      #   adapters = {
+      #     servers = {
+      #       gdb = {
+      #         executable = {
+      #           command = "gdb";
+      #           args = [
+      #             "--interpreter=dap"
+      #             "--eval-command"
+      #             "set print pretty on"
+      #           ];
+      #         };
+      #         host = "localhost";
+      #         port = 1234;
+      #       };
+      #     };
+      #   };
+      #
+      #   configurations = {
+      #     c = [
+      #       {
+      #         name = "Launch";
+      #         type = "gdb";
+      #         request = "launch";
+      #       }
+      #       {
+      #         name = "Select and attach to process";
+      #         type = "gdb";
+      #         request = "attach";
+      #       }
+      #       {
+      #         name = "Attach to gdbserver :1234";
+      #         type = "gdb";
+      #         request = "attach";
+      #       }
+      #     ];
+      #     cpp = [
+      #       {
+      #         name = "Launch";
+      #         type = "gdb";
+      #         request = "launch";
+      #       }
+      #       {
+      #         name = "Select and attach to process";
+      #         type = "gdb";
+      #         request = "attach";
+      #       }
+      #       {
+      #         name = "Attach to gdbserver :1234";
+      #         type = "gdb";
+      #         request = "attach";
+      #       }
+      #     ];
+      #   };
+      # };
 
       telescope = {
         enable = true;
@@ -1104,6 +1205,11 @@
           };
           surround = { };
         };
+      };
+
+      notify = {
+        enable = true;
+        fps = 60;
       };
 
       tmux-navigator = {
@@ -1294,35 +1400,45 @@
       '';
     };
 
-    alacritty = {
+    wezterm = {
       enable = true;
-      settings = {
-        shell = { program = "${pkgs.zsh}/bin/zsh"; };
-        window = {
-          startup_mode = "fullscreen";
-          opacity = 0.8;
-          padding = {
-            x = 10;
-            y = 10;
-          };
-          decorations = "full";
-          title = "Terminal";
-          dynamic_title = true;
-        };
-        font = {
-          normal = {
-            family = "JetBrainsMono NFM";
-            style = "Regular";
-          };
-          size = 14.0;
-        };
-        colors = {
-          primary = {
-            background = "#282c34";
-            foreground = "#abb2bf";
-          };
-        };
-      };
+      enableZshIntegration = true;
+      extraConfig = ''
+        local wezterm = require 'wezterm'
+        local mux = wezterm.mux
+        local config = {}
+
+        wezterm.on("gui-startup", 
+        function(cmd)
+          local tab, pane, window = mux.spawn_window(cmd or {})
+          window:gui_window():maximize()
+        end)
+
+        if wezterm.config_builder then
+          config = wezterm.config_builder()
+        end
+
+        config.default_prog = { '${pkgs.zsh}/bin/zsh', '-c', 'tmux attach || tmux new' }
+        config.window_decorations = "RESIZE"
+        config.window_padding = {
+          left = 25,
+          right = 25,
+          top = 25,
+          bottom = 15,
+        }
+        config.window_background_opacity = 0.8
+        config.initial_cols = 120
+        config.initial_rows = 30
+
+        config.font = wezterm.font('JetBrainsMono NFM')
+        config.font_size = 14.0
+
+        config.window_close_confirmation = 'NeverPrompt'
+        config.hide_tab_bar_if_only_one_tab = true
+        config.color_scheme = "Catppuccin Mocha"
+
+        return config
+      '';
     };
 
     tmux = {
@@ -1335,79 +1451,69 @@
       aggressiveResize = true;
       escapeTime = 0;
       historyLimit = 50000;
+      terminal = "xterm-256color";
       clock24 = true;
       extraConfig = ''
         set-option -sa terminal-overrides ",xterm*:Tc"
         set -g default-terminal "tmux-256color"
         set -ag terminal-overrides ",xterm-256color:RGB"
 
+        # Enable Sixel support
+        set -ga terminal-features ",xterm*:sixel"
+        set -ga terminal-overrides ",xterm*:Tc"
+
         # Enable mouse support
         set -g mouse on
-
         # Relabel indexes
         set -g base-index 1
         set -g pane-base-index 1
         set-window-option -g pane-base-index 1
         set-option -g renumber-windows on
-
         # Enable activity alerts
         setw -g monitor-activity on
         set -g visual-activity on
-
         # Center the window list
         set -g status-justify centre
-
         # Vim style copy mode
         bind-key -T copy-mode-vi 'v' send -X begin-selection
         bind-key -T copy-mode-vi 'y' send -X copy-selection-and-cancel
-
         # Pane navigation
         bind-key 'h' select-pane -L
         bind-key 'j' select-pane -D
         bind-key 'k' select-pane -U
         bind-key 'l' select-pane -R
-
         # Smart pane switching with awareness of vim splits.
         # See: https://github.com/christoomey/vim-tmux-navigator
         is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
           | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|l?n?vim?x?|fzf)(diff)?$'"
-
         bind-key -n 'C-h' if-shell "$is_vim" 'send-keys C-h'  'select-pane -L'
         bind-key -n 'C-j' if-shell "$is_vim" 'send-keys C-j'  'select-pane -D'
         bind-key -n 'C-k' if-shell "$is_vim" 'send-keys C-k'  'select-pane -U'
         bind-key -n 'C-l' if-shell "$is_vim" 'send-keys C-l'  'select-pane -R'
-
         # Use Alt-arrow keys without prefix key to switch panes
         bind -n M-Left select-pane -L
         bind -n M-Right select-pane -R
         bind -n M-Up select-pane -U
         bind -n M-Down select-pane -D
-
         # Shift Alt vim keys to switch windows
         bind -n M-H previous-window
         bind -n M-L next-window
-
         # TPM plugins
         set -g @plugin 'tmux-plugins/tpm'
         set -g @plugin 'tmux-plugins/tmux-sensible'
         set -g @plugin 'christoomey/vim-tmux-navigator'
         set -g @plugin 'tmux-plugins/tmux-yank'
-
         set -g @plugin 'tmux-plugins/tmux-resurrect'
         set -g @plugin 'tmux-plugins/tmux-continuum'
         set -g @continuum-restore 'on'
         set -g @continuum-save-interval '5'
-
         set -g @plugin 'dreamsofcode-io/catppuccin-tmux'
-
         # keybindings
         bind-key -T copy-mode-vi v send-keys -X begin-selection
         bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
         bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
-
         bind '"' split-window -v -c "#{pane_current_path}"
         bind % split-window -h -c "#{pane_current_path}"
-
         # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
         run '~/.tmux/plugins/tpm/tpm'
       '';

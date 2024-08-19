@@ -131,9 +131,6 @@
     gnome-tweaks
 
     #terminal
-    alacritty
-    tmux
-    zsh
     fzf
     ripgrep
     tree-sitter
@@ -151,9 +148,13 @@
 
     #formatters
     nixfmt
+    rustfmt
     stylua
     black
     yamllint
+
+    #debuggers
+    gdb
 
     # packagemanagers
     cargo
