@@ -1020,22 +1020,24 @@
 
       conform-nvim = {
         enable = true;
-        formatOnSave = {
-          lspFallback = true;
-          timeoutMs = 500;
-        };
-        notifyOnError = true;
-        formattersByFt = {
-          html = [[ "prettierd" "prettier" ]];
-          css = [[ "prettierd" "prettier" ]];
-          javascript = [[ "prettierd" "prettier" ]];
-          typescript = [[ "prettierd" "prettier" ]];
-          python = [ "black" ];
-          lua = [ "stylua" ];
-          nix = [ "nixfmt" ];
-          markdown = [[ "prettierd" "prettier" ]];
-          yaml = [ "yamllint" ];
-          rust = [ "rustfmt" ];
+        settings = {
+          format_on_save = {
+            lspFallback = true;
+            timeoutMs = 500;
+          };
+          notify_on_error = true;
+          formatters_by_ft = {
+            html = [[ "prettierd" "prettier" ]];
+            css = [[ "prettierd" "prettier" ]];
+            javascript = [[ "prettierd" "prettier" ]];
+            typescript = [[ "prettierd" "prettier" ]];
+            python = [ "black" ];
+            lua = [ "stylua" ];
+            nix = [ "nixfmt" ];
+            markdown = [[ "prettierd" "prettier" ]];
+            yaml = [ "yamllint" ];
+            rust = [ "rustfmt" ];
+          };
         };
       };
 
@@ -1523,7 +1525,7 @@
     btop = {
       enable = true;
       settings = {
-        color_theme = "gruvbox_dark_v2";
+        color_theme = "catppuccin_mocha";
         vim_keys = true;
       };
     };

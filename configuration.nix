@@ -8,6 +8,7 @@
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
     inputs.home-manager.nixosModules.home-manager
+    inputs.xremap-flake.nixosModules.default
   ];
 
   # Bootloader.
@@ -55,6 +56,20 @@
   services.xserver.xkb = {
     layout = "de";
     variant = "";
+  };
+
+  services.xremap = {
+    userName = "felix";
+    config = {
+      keymap = [{
+        name = "main remaps";
+        remap = {
+          super-alt-t = { launch = [ "wezterm" ]; };
+          "CapsLock" = "esc";
+        };
+      }];
+    };
+
   };
 
   # Configure console keymap
@@ -127,7 +142,7 @@
     #nix
     home-manager
 
-    #gnome
+    #desktop
     gnome-tweaks
 
     #terminal

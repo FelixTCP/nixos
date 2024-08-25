@@ -16,13 +16,14 @@
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    xremap-flake.url = "github:xremap/nix-flake";
 
   };
 
   outputs = { nixpkgs, home-manager, nixvim, ... }@inputs:
     let
       system = "x86_64-linux";
-      pkgs = pkgs.legacyPackages.${system};
+      pkgs = nixpkgs.legacyPackages.${system};
     in {
       nixosConfigurations = {
         defaultNixos = nixpkgs.lib.nixosSystem {
