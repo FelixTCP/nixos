@@ -64,7 +64,7 @@
       keymap = [{
         name = "main remaps";
         remap = {
-          super-alt-t = { launch = [ "wezterm" ]; };
+          super-t = { launch = [ "wezterm" ]; };
           "CapsLock" = "esc";
         };
       }];
@@ -204,6 +204,7 @@
     whatsapp-for-linux
     vesktop
     discord
+    portfolio
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

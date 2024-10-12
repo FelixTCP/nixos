@@ -32,5 +32,41 @@
           modules = [ ./configuration.nix ];
         };
       };
+
+      #devShells
+      devShells.${system} = {
+        #pg2
+        default = pkgs.mkShell {
+          nativeBuildInputs = with pkgs; [
+            gcc
+            gnumake
+            cgdb
+            gdb
+            pngpp
+            valgrind
+          ];
+
+          shellHook = ''
+            if [ -z "$IN_NIX_SHELL_ZSH" ]; then
+              export IN_NIX_SHELL_ZSH=1
+              exec zsh
+            fi
+          '';
+
+        };
+
+        #julia
+        julia = pkgs.mkShell {
+          nativeBuildInputs = with pkgs; [ julia-bin ];
+
+          shellHook = ''
+            if [ -z "$IN_NIX_SHELL_ZSH" ]; then
+              export IN_NIX_SHELL_ZSH=1
+              exec zsh
+            fi
+          '';
+
+        };
+      };
     };
 }

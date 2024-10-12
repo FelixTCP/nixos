@@ -1403,8 +1403,9 @@
     };
 
     wezterm = {
-      enable = true;
+      enable = false;
       enableZshIntegration = true;
+      package = pkgs.wezterm;
       extraConfig = ''
         local wezterm = require 'wezterm'
         local mux = wezterm.mux
@@ -1432,8 +1433,10 @@
         config.initial_cols = 120
         config.initial_rows = 30
 
-        config.font = wezterm.font('JetBrainsMono NFM')
+        config.font = wezterm.font('JetBrains Mono', {weight="Regular", stretch="Normal", style="Normal"})
         config.font_size = 14.0
+        config.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }
+        config.front_end = "Software"
 
         config.window_close_confirmation = 'NeverPrompt'
         config.hide_tab_bar_if_only_one_tab = true
