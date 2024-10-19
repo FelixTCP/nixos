@@ -8,14 +8,49 @@
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
     inputs.home-manager.nixosModules.home-manager
+    inputs.catppuccin.nixosModules.catppuccin
     inputs.xremap-flake.nixosModules.default
   ];
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot = {
+    loader.grub = {
+      enable = true;
+      device = "/dev/sda"; # or "nodev" for EFI only
+      useOSProber = true;
+      gfxmodeEfi = "1920x1080";
+      gfxmodeBios = "1920x1080";
+      gfxpayloadEfi = "keep";
+      gfxpayloadBios = "keep";
 
-  networking.hostName = "nix"; # Define your hostname.
+      # Catppuccin theme configuration
+      theme = pkgs.fetchFromGitHub {
+        owner = "catppuccin";
+        repo = "grub";
+        rev =
+          "f4b254776afd4c76e44e7c406e0b2631694a0343"; # Replace with the latest commit hash
+        sha256 =
+          "/bSolCta8GCZ4lP0u5NVqYQ9Y3ZooYCNdTwORNvR7M0="; # Replace with the correct SHA256
+      } + "/src/catppuccin-mocha-grub-theme";
+
+      # If you want to customize the colors
+      extraConfig = ''
+        set menu_color_normal=white/black
+        set menu_color_highlight=black/light-blue
+      '';
+
+    };
+    plymouth = {
+      enable = true;
+      theme = "tribar"; # You can choose other themes like "breeze" or "bgrt"
+    };
+    kernelParams =
+      [ "quiet" "splash" "plymouth.ignore-serial-consoles" "video=1920x1080" ];
+    consoleLogLevel = 0;
+    initrd.verbose = false;
+  };
+
+  networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -133,7 +168,9 @@
     extraSpecialArgs = { inherit inputs; };
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.felix = import ./home.nix;
+    users.felix = {
+      imports = [ inputs.catppuccin.homeManagerModules.catppuccin ./home.nix ];
+    };
   };
 
   # List packages installed in system profile. To search, run:
@@ -141,6 +178,10 @@
   environment.systemPackages = with pkgs; [
     #nix
     home-manager
+
+    #boot
+    plymouth
+    catppuccin-plymouth
 
     #desktop
     gnome-tweaks
@@ -162,6 +203,7 @@
     yamllint
 
     #formatters
+    codespell
     nixfmt
     rustfmt
     stylua
@@ -201,6 +243,7 @@
     #applications
     spotify
     thunderbird
+    inputs.zen-browser.packages."${system}".specific
     whatsapp-for-linux
     vesktop
     discord

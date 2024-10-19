@@ -53,15 +53,14 @@
       sha256 = "sha256-hW8mfwB8F9ZkTQ72WQp/1fy8KL1IIYMZBtZYIwZdMQc=";
     };
 
-    # TODO: 
-    # home.file.".vpn/openfortivpn/oth".text = ''
-    #   host = sslvpn.oth-regensburg.de
-    #   realm = vpn-default
-    #   port = 443
-    #   trusted-cert = 2d93980ff2351c71f8721f554df368bdd38bfcfe3b28f67e19b898623f09d7f2
-    #   username = wef41751
-    #   password =
-    # '';
+    ".vpn/openfortivpn/oth".text = ''
+      host = sslvpn.oth-regensburg.de
+      realm = vpn-default
+      port = 443
+      trusted-cert = 364fb4fa107e591626b3919f0e7f8169e9d2097974f3e3d55e56c7c756a1f94a
+      username = wef41751
+      password = vTFYall6lrq68@WT
+    '';
 
     "Uni/.gitconfig" = {
       text = ''
@@ -83,7 +82,8 @@
                 "https://raw.githubusercontent.com/TheCommieAxolotl/BetterDiscord-Stuff/main/Ultra/Ultra.theme.css",
                 "https://raw.githubusercontent.com/TheCommieAxolotl/BetterDiscord-Stuff/main/Ultra/Ultra.json",
                 "https://raw.githubusercontent.com/TheCommieAxolotl/BetterDiscord-Stuff/main/Ultra/Ultra.css",
-                "https://raw.githubusercontent.com/mwittrien/BetterDiscordAddons/master/Themes/SettingsModal/SettingsModal.theme.css"
+                "https://raw.githubusercontent.com/mwittrien/BetterDiscordAddons/master/Themes/SettingsModal/SettingsModal.theme.css",
+                "https://raw.githubusercontent.com/FelixTCP/catppuccin-mocha/refs/heads/main/mocha.json"
             ],
             "enabledThemes": [],
             "enableReactDevtools": false,
@@ -761,7 +761,7 @@
           gitsigns = true;
           nvimtree = true;
           treesitter = true;
-          notify = false;
+          notify = true;
           mini = {
             enabled = true;
             indentscope_color = "";
@@ -835,7 +835,7 @@
         action = "<cmd>:Telescope git_commits<CR>";
         key = "<leader>gc";
         mode = [ "n" ];
-        options = { desc = "Search [C]ommits"; };
+        options = { desc = "Search [C]omits"; };
       }
       {
         action = "<cmd>:Gitsigns toggle_deleted<CR>";
@@ -903,6 +903,7 @@
       todo-comments.enable = true;
       headlines.enable = true;
       trouble.enable = true;
+      web-devicons.enable = true;
 
       which-key = {
         enable = true;
@@ -943,9 +944,9 @@
           # c / cpp
           clangd.enable = true;
           # nix
-          nil-ls.enable = true;
+          nil_ls.enable = true;
           pyright.enable = true;
-          rust-analyzer = {
+          rust_analyzer = {
             enable = true;
             installCargo = false;
             installRustc = true;
@@ -956,7 +957,7 @@
           lspBuf = {
             gd = {
               action = "definition";
-              desc = "[G]oto [D]efinition";
+              desc = "[G]oto [D]definition";
             };
             gr = {
               action = "references";
@@ -972,7 +973,7 @@
             };
             gT = {
               action = "type_definition";
-              desc = "Type [D]efinition";
+              desc = "Type [D]definition";
             };
             K = {
               action = "hover";
@@ -980,7 +981,7 @@
             };
             "<leader>cw" = {
               action = "workspace_symbol";
-              desc = "[W]orkspace [S]ymbol";
+              desc = "[W]orkspace [S]symbol";
             };
             "<leader>ca" = {
               action = "code_action";
@@ -1011,9 +1012,7 @@
       lint = {
         enable = true;
         lintersByFt = {
-          text = [ "vale" ];
           json = [ "jsonlint" ];
-          markdown = [ "vale" ];
           nix = [ "statix" ];
         };
       };
@@ -1037,6 +1036,8 @@
             markdown = [[ "prettierd" "prettier" ]];
             yaml = [ "yamllint" ];
             rust = [ "rustfmt" ];
+            text = [ "codespell" ];
+            "*" = [ "codespell" ];
           };
         };
       };
@@ -1252,6 +1253,7 @@
   };
 
   programs = {
+
     git = {
       enable = true;
       userName = "Felix Wensky";
@@ -1260,12 +1262,10 @@
       delta = {
         enable = true;
         options = {
-          features = "decorations";
           navigate = true;
           light = false; # set to true for light terminal backgrounds
           side-by-side = true;
           line-numbers = true;
-          syntax-theme = "Dracula";
           plus-style = "syntax #003800";
           minus-style = "syntax #3f0001";
 
@@ -1348,7 +1348,8 @@
         lt =
           "eza --color=always --tree --level=3 --group-directories-first --long --git --no-filesize --icons=always --no-time --no-user --no-permissions";
         git-loc = "git ls-files | xargs wc -l";
-        # oth-connect = "sudo openfortivpn -c ~/.vpn/openfortivpn/oth";
+        oth-connect = "sudo openfortivpn -c ~/.vpn/openfortivpn/oth";
+        kigs-connect = "ssh wef41751@194.95.108.135";
       };
       initExtra = ''
                 # Enable correction
@@ -1403,7 +1404,7 @@
     };
 
     wezterm = {
-      enable = false;
+      enable = true;
       enableZshIntegration = true;
       package = pkgs.wezterm;
       extraConfig = ''
@@ -1436,7 +1437,7 @@
         config.font = wezterm.font('JetBrains Mono', {weight="Regular", stretch="Normal", style="Normal"})
         config.font_size = 14.0
         config.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }
-        config.front_end = "Software"
+        config.front_end = "WebGpu"
 
         config.window_close_confirmation = 'NeverPrompt'
         config.hide_tab_bar_if_only_one_tab = true
@@ -1527,10 +1528,7 @@
 
     btop = {
       enable = true;
-      settings = {
-        color_theme = "catppuccin_mocha";
-        vim_keys = true;
-      };
+      settings = { vim_keys = true; };
     };
 
     atuin = {
@@ -1547,60 +1545,11 @@
       enable = true;
       enableZshIntegration = true;
     };
+  };
 
-    firefox = {
-      enable = true;
-      profiles.felix = {
-        extensions = with inputs.firefox-addons.packages."x86_64-linux"; [
-          bitwarden
-          ublock-origin
-          sponsorblock
-          youtube-shorts-block
-        ];
-      };
-      policies = {
-        DisableTelemetry = true;
-        DisableFirefoxStudies = true;
-        EnableTrackingProtection = {
-          Value = true;
-          Locked = true;
-          Cryptomining = true;
-          Fingerprinting = true;
-        };
-        DisablePocket = true;
-        DisableFirefoxAccounts = true;
-        DisableAccounts = true;
-        DisableFirefoxScreenshots = true;
-        OverrideFirstRunPage = "";
-        OverridePostUpdatePage = "";
-        DontCheckDefaultBrowser = true;
-        DisplayBookmarksToolbar = "always";
-        DisplayMenuBar =
-          "default-off"; # alternatives: "always", "never" or "default-on"
-        SearchBar = "unified"; # alternative: "separate"
-
-        # not sure if this even works
-        # Preferences = { 
-        #   "browser.contentblocking.category" = { Value = "strict"; Status = "locked"; };
-        #   "extensions.pocket.enabled" = false;
-        #   "extensions.screenshots.disabled" = true;
-        #   "browser.topsites.contile.enabled" = false;
-        #   "browser.formfill.enable" = false;
-        #   "browser.search.suggest.enabled" = true;
-        #   "browser.search.suggest.enabled.private" = true;
-        #   "browser.urlbar.suggest.searches" = true;
-        #   "browser.urlbar.showSearchSuggestionsFirst" = false;
-        #   "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
-        #   "browser.newtabpage.activity-stream.feeds.snippets" = false;
-        #   "browser.newtabpage.activity-stream.section.highlights.includePocket" = false;
-        #   "browser.newtabpage.activity-stream.section.highlights.includeBookmarks" = false;
-        #   "browser.newtabpage.activity-stream.section.highlights.includeDownloads" = false;
-        #   "browser.newtabpage.activity-stream.section.highlights.includeVisited" = false;
-        #   "browser.newtabpage.activity-stream.showSponsored" = false;
-        #   "browser.newtabpage.activity-stream.system.showSponsored" = false;
-        #   "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
-        # };
-      };
-    };
+  catppuccin = {
+    enable = true;
+    accent = "blue";
+    flavor = "mocha"; # Note the spelling: "flavor", not "flavour"
   };
 }
