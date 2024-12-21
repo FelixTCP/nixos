@@ -229,6 +229,7 @@
     #uni
     obsidian
     openfortivpn
+    dbeaver-bin
 
     #utils
     zip

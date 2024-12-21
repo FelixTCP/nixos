@@ -901,9 +901,12 @@
       luasnip.enable = true;
       fugitive.enable = true;
       todo-comments.enable = true;
+      comment.enable = true;
       headlines.enable = true;
       trouble.enable = true;
       web-devicons.enable = true;
+
+      copilot-vim.enable = true;
 
       which-key = {
         enable = true;
